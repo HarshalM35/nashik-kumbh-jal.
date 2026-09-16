@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nashik Kumbh Jal - Invoice</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #07111f;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .invoice {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            color: #111;
+            padding: 35px;
+            border-radius: 12px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            color: #b8860b;
+            font-size: 28px;
+        }
+
+        .brand p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .invoice-title {
+            text-align: right;
+        }
+
+        .invoice-title h2 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .box h3 {
+            margin-top: 0;
+            color: #b8860b;
+        }
+
+        .box p {
+            margin: 7px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f5f5f5;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .summary {
+            width: 350px;
+            max-width: 100%;
+            margin-left: auto;
+            margin-top: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .grand-total {
+            border-top: 2px solid #222;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .payment {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #555;
+        }
+
+        .buttons {
+            max-width: 800px;
+            margin: 20px auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .print-btn {
+            background: #ffd76a;
+            color: #222;
+        }
+
+        .back-btn {
+            background: #9de7ff;
+            color: #061321;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+
+        @media(max-width:600px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .invoice {
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .invoice-title {
+                text-align: left;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .invoice {
+                max-width: 100%;
+                border-radius: 0;
+                padding: 20px;
+            }
+
+            .buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading" class="loading">
+        Loading Invoice...
+    </div>
+
+
+    <div id="invoice" class="invoice" style="display:none;">
+
+        <div class="header">
+
+            <div class="brand">
+
+                <h1>🪔 Nashik Kumbh Jal</h1>
+
+                <p>Pure Water • Divine Journey</p>
+
+            </div>
+
+
+            <div class="invoice-title">
+
+                <h2>INVOICE</h2>
+
+                <p>
+                    Invoice Date:
+                    <span id="invoiceDate"></span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="box">
+
+                <h3>Customer Details</h3>
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="customerName"></span>
+                </p>
+
+                <p>
+                    <strong>Mobile:</strong>
+                    <span id="customerMobile"></span>
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    <span id="customerAddress"></span>
+                </p>
+
+                <p>
+                    <strong>PIN:</strong>
+                    <span id="customerPin"></span>
+                </p>
+
+            </div>
+
+
+            <div class="box">
+
+                <h3>Order Details</h3>
+
+                <p>
+                    <strong>Order ID:</strong>
+                    <span id="orderId"></span>
+                </p>
+
+                <p>
+                    <strong>Payment Status:</strong>
+                    <span id="paymentStatus"></span>
+                </p>
+
+                <p>
+                    <strong>Order Status:</strong>
+                    <span id="orderStatus"></span>
+                </p>
+
+                <p>
+                    <strong>Tracking No.:</strong>
+                    <span id="trackingNumber">-</span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+
+                    <th>Quantity</th>
+
+                    <th>Price</th>
+
+                    <th class="right">Total</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="productTable">
+
+            </tbody>
+
+        </table>
+
+
+        <div class="summary">
+
+            <div class="summary-row">
+
+                <span>Product Total</span>
+
+                <strong>
+                    ₹<span id="productTotal">0</span>
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    India Post
+                </span>
+
+                <strong>
+                    ₹<span id="postage">0</span>
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Packing
+                </span>
+
+                <strong>
+                    ₹<span id="packing">0</span>
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Packed Weight
+                </span>
+
+                <strong>
+                    <span id="weight">0</span> g
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row grand-total">
+
+                <span>
+                    Final Amount
+                </span>
+
+                <span>
+                    ₹<span id="finalAmount">0</span>
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment">
+
+            <strong>Payment Information</strong>
+
+            <p>
+                UPI ID:
+                <span id="upiId"></span>
+            </p>
+
+            <p>
+                UTR / Transaction ID:
+                <span id="utr"></span>
+            </p>
+
+        </div>
+
+
+        <div class="footer">
+
+            <strong>Thank you for ordering Nashik Kumbh Jal! 🙏</strong>
+
+            <p>
+                Please keep this invoice for your records.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="print-btn"
+            onclick="window.print()"
+        >
+            🖨️ Print / Save as PDF
+        </button>
+
+
+        <button
+            class="back-btn"
+            onclick="window.location.href='index.html'"
+        >
+            🏠 Back to Website
+        </button>
+
+    </div>
+
+
+    <script type="module">
+
+        /* =====================================================
+           FIREBASE
+           ===================================================== */
+
+        let firebaseDB = null;
+
+
+        async function loadFirebase() {
+
+            try {
+
+                const firebase =
+                    await import("./firebase.js");
+
+                firebaseDB =
+                    firebase.db;
+
+                return firebase;
+
+            } catch (error) {
+
+                console.error(error);
+
+                return null;
+            }
+        }
+
+
+        /* =====================================================
+           GET ORDER ID
+           ===================================================== */
+
+        function getOrderId() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const urlOrderId =
+                params.get("orderId");
+
+            if (urlOrderId) {
+
+                return urlOrderId;
+            }
+
+
+            return localStorage.getItem(
+                "kumbhJalLastOrderId"
+            );
+        }
+
+
+        /* =====================================================
+           LOAD ORDER
+           ===================================================== */
+
+        async function loadInvoice() {
+
+            const orderId =
+                getOrderId();
+
+
+            if (!orderId) {
+
+                showError(
+                    "Order ID not found."
+                );
+
+                return;
+            }
+
+
+            try {
+
+                const firebase =
+                    await loadFirebase();
+
+
+                if (!firebase) {
+
+                    showError(
+                        "Firebase connection failed."
+                    );
+
+                    return;
+                }
+
+
+                await firebase.signInAnonymously(
+                    firebase.auth
+                );
+
+
+                const firestore =
+                    await import(
+                        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+                    );
+
+
+                const orderRef =
+                    firestore.doc(
+                        firebaseDB,
+                        "Orders",
+                        orderId
+                    );
+
+
+                const snapshot =
+                    await firestore.getDoc(
+                        orderRef
+                    );
+
+
+                if (!snapshot.exists()) {
+
+                    showError(
+                        "Order not found."
+                    );
+
+                    return;
+                }
+
+
+                const order =
+                    snapshot.data();
+
+
+                displayInvoice(order);
+
+            } catch (error) {
+
+                console.error(
+                    "Invoice error:",
+                    error
+                );
+
+
+                showError(
+                    "Could not load invoice."
+                );
+            }
+        }
+
+
+        /* =====================================================
+           DISPLAY INVOICE
+           ===================================================== */
+
+        function displayInvoice(order) {
+
+            const customer =
+                order.customer || {};
+
+
+            document.getElementById(
+                "customerName"
+            ).innerText =
+                customer.name || "-";
+
+
+            document.getElementById(
+                "customerMobile"
+            ).innerText =
+                customer.mobile || "-";
+
+
+            document.getElementById(
+                "customerAddress"
+            ).innerText =
+                customer.address || "-";
+
+
+            document.getElementById(
+                "customerPin"
+            ).innerText =
+                customer.pin || "-";
+
+
+            document.getElementById(
+                "orderId"
+            ).innerText =
+                order.orderId || "-";
+
+
+            document.getElementById(
+                "paymentStatus"
+            ).innerText =
+                order.paymentStatus || "-";
+
+
+            document.getElementById(
+                "orderStatus"
+            ).innerText =
+                order.orderStatus || "-";
+
+
+            document.getElementById(
+                "trackingNumber"
+            ).innerText =
+                order.trackingNumber || "-";
+
+
+            document.getElementById(
+                "invoiceDate"
+            ).innerText =
+                formatDate(
+                    order.createdAt
+                );
+
+
+            document.getElementById(
+                "productTotal"
+            ).innerText =
+                order.productTotal || 0;
+
+
+            const shippingDetails =
+                order.shippingDetails || {};
+
+
+            document.getElementById(
+                "postage"
+            ).innerText =
+                shippingDetails.postage || 0;
+
+
+            document.getElementById(
+                "packing"
+            ).innerText =
+                shippingDetails.packing || 0;
+
+
+            document.getElementById(
+                "weight"
+            ).innerText =
+                order.totalWeight || 0;
+
+
+            document.getElementById(
+                "finalAmount"
+            ).innerText =
+                order.finalAmount || 0;
+
+
+            document.getElementById(
+                "upiId"
+            ).innerText =
+                order.upiId || "-";
+
+
+            document.getElementById(
+                "utr"
+            ).innerText =
+                order.utr || "-";
+
+
+            /* =================================================
+               PRODUCTS
+               ================================================= */
+
+            const table =
+                document.getElementById(
+                    "productTable"
+                );
+
+
+            table.innerHTML = "";
+
+
+            const products =
+                order.cart || [];
+
+
+            products.forEach(
+                item => {
+
+                    const quantity =
+                        Number(
+                            item.quantity
+                        );
+
+
+                    const price =
+                        Number(
+                            item.price
+                        );
+
+
+                    const total =
+                        price *
+                        quantity;
+
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${item.name || "-"}
+                        </td>
+
+                        <td>
+                            ${quantity}
+                        </td>
+
+                        <td>
+                            ₹${price}
+                        </td>
+
+                        <td class="right">
+                            ₹${total}
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(
+                        row
+                    );
+                }
+            );
+
+
+            document.getElementById(
+                "loading"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "invoice"
+            ).style.display =
+                "block";
+        }
+
+
+        /* =====================================================
+           DATE
+           ===================================================== */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+
+                return "-";
+            }
+
+
+            const date =
+                new Date(dateValue);
+
+
+            if (isNaN(date.getTime())) {
+
+                return "-";
+            }
+
+
+            return date.toLocaleString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+        }
+
+
+        /* =====================================================
+           ERROR
+           ===================================================== */
+
+        function showError(message) {
+
+            document.getElementById(
+                "loading"
+            ).innerHTML = `
+
+                <h2>
+                    ⚠️ ${message}
+                </h2>
+
+                <button
+                    onclick="
+                        window.location.href='index.html'
+                    "
+                    style="
+                        margin-top:20px;
+                        padding:12px 20px;
+                        border:0;
+                        border-radius:8px;
+                        cursor:pointer;
+                    "
+                >
+                    Back to Website
+                </button>
+
+            `;
+        }
+
+
+        /* =====================================================
+           START
+           ===================================================== */
+
+        loadInvoice();
+
+    </script>
+
+</body>
+
+</html>

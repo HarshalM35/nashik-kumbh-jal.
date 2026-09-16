@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Track Order | Nashik Kumbh Jal</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        💧 <span>Nashik</span> Kumbh Jal
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#products">Jal</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#order">Order</a>
+    </nav>
+
+</header>
+
+
+<section
+    style="
+        min-height:80vh;
+        padding:120px 20px 60px;
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+    "
+>
+
+    <div
+        style="
+            width:100%;
+            max-width:500px;
+            background:#08152b;
+            color:white;
+            padding:30px;
+            border-radius:22px;
+            border:1px solid rgba(255,215,120,.35);
+            box-shadow:0 20px 60px rgba(0,0,0,.35);
+        "
+    >
+
+        <div style="text-align:center;">
+
+            <div style="font-size:45px;">
+                📦
+            </div>
+
+            <h2 style="color:#ffd76a;">
+                Track Your Order
+            </h2>
+
+            <p style="color:#9de7ff;">
+                Enter your Order ID and Mobile Number
+            </p>
+
+        </div>
+
+
+        <label
+            style="
+                display:block;
+                margin-top:25px;
+                margin-bottom:8px;
+            "
+        >
+            Order ID
+        </label>
+
+        <input
+            id="orderId"
+            type="text"
+            placeholder="Example: KJ003380160"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #555;
+                background:#101f38;
+                color:white;
+                outline:none;
+                font-size:15px;
+            "
+        >
+
+
+        <label
+            style="
+                display:block;
+                margin-top:15px;
+                margin-bottom:8px;
+            "
+        >
+            Mobile Number
+        </label>
+
+        <input
+            id="mobile"
+            type="tel"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="Enter 10 digit mobile number"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #555;
+                background:#101f38;
+                color:white;
+                outline:none;
+                font-size:15px;
+            "
+        >
+
+
+        <button
+            onclick="trackOrder()"
+            style="
+                width:100%;
+                margin-top:15px;
+                padding:14px;
+                border:0;
+                border-radius:12px;
+                background:linear-gradient(
+                    135deg,
+                    #ffd76a,
+                    #ffad42
+                );
+                color:#241600;
+                font-weight:bold;
+                font-size:16px;
+                cursor:pointer;
+            "
+        >
+            🔎 Track Order
+        </button>
+
+
+        <div
+            id="trackingResult"
+            style="margin-top:25px;"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<script type="module">
+
+import {
+    db,
+    auth,
+    signInAnonymously
+} from "./firebase.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+let firebaseReady = false;
+
+
+/* =========================================
+   FIREBASE LOGIN
+========================================= */
+
+async function initTrackingFirebase() {
+
+    try {
+
+        await signInAnonymously(auth);
+
+        firebaseReady = true;
+
+        console.log(
+            "Tracking Firebase connected."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Firebase tracking error:",
+            error
+        );
+
+        document.getElementById(
+            "trackingResult"
+        ).innerHTML = `
+            <p style="color:#ff7777;">
+                Firebase connection failed.
+                Please try again.
+            </p>
+        `;
+    }
+}
+
+
+initTrackingFirebase();
+
+
+/* =========================================
+   TRACK ORDER
+========================================= */
+
+window.trackOrder = async function () {
+
+    const orderId =
+        document
+        .getElementById("orderId")
+        .value
+        .trim();
+
+    const mobile =
+        document
+        .getElementById("mobile")
+        .value
+        .trim();
+
+    const result =
+        document
+        .getElementById("trackingResult");
+
+
+    /* =====================================
+       VALIDATION
+    ===================================== */
+
+    if (!orderId) {
+
+        result.innerHTML = `
+            <p style="color:#ff7777;">
+                Please enter your Order ID.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+
+        result.innerHTML = `
+            <p style="color:#ff7777;">
+                Please enter a valid 10 digit mobile number.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    if (!firebaseReady) {
+
+        result.innerHTML = `
+            <p style="color:#ffd76a;">
+                Connecting to server...
+                Please try again in a moment.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    result.innerHTML = `
+        <p style="text-align:center;color:#9de7ff;">
+            🔄 Checking your order...
+        </p>
+    `;
+
+
+    try {
+
+        const orderRef =
+            doc(
+                db,
+                "Orders",
+                orderId
+            );
+
+
+        const orderSnapshot =
+            await getDoc(orderRef);
+
+
+        if (!orderSnapshot.exists()) {
+
+            result.innerHTML = `
+                <div style="
+                    padding:18px;
+                    border-radius:14px;
+                    background:rgba(255,80,80,.08);
+                    border:1px solid rgba(255,80,80,.25);
+                ">
+
+                    <h3 style="color:#ff9999;">
+                        Order Not Found
+                    </h3>
+
+                    <p>
+                        Please check your Order ID.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const order =
+            orderSnapshot.data();
+
+
+        /* =====================================
+           MOBILE NUMBER CHECK
+        ===================================== */
+
+        const savedMobile =
+            String(
+                order.customer?.mobile ||
+                order.mobile ||
+                ""
+            )
+            .replace(/\D/g, "");
+
+
+        if (savedMobile !== mobile) {
+
+            result.innerHTML = `
+                <div style="
+                    padding:18px;
+                    border-radius:14px;
+                    background:rgba(255,193,70,.08);
+                    border:1px solid rgba(255,193,70,.25);
+                ">
+
+                    <h3 style="color:#ffd76a;">
+                        Details Not Matched
+                    </h3>
+
+                    <p>
+                        Order ID and mobile number
+                        do not match.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* =====================================
+           ORDER STATUS
+        ===================================== */
+
+        const status =
+            order.orderStatus ||
+            "Payment Submitted";
+
+
+        let statusMessage =
+            "Your order status has been updated.";
+
+        let statusIcon = "📋";
+
+
+        if (
+            status ===
+            "Payment Submitted"
+        ) {
+
+            statusMessage =
+                "Your order has been submitted and payment is waiting for verification.";
+
+            statusIcon = "💳";
+
+        }
+
+        else if (
+            status ===
+            "Payment Confirmed"
+        ) {
+
+            statusMessage =
+                "Payment verified successfully. Your order is confirmed.";
+
+            statusIcon = "✅";
+
+        }
+
+        else if (
+            status === "Packed"
+        ) {
+
+            statusMessage =
+                "Your order has been packed and is ready for dispatch.";
+
+            statusIcon = "📦";
+
+        }
+
+        else if (
+            status === "Shipped"
+        ) {
+
+            statusMessage =
+                "Your order has been shipped.";
+
+            statusIcon = "🚚";
+
+        }
+
+        else if (
+            status ===
+            "Out for Delivery"
+        ) {
+
+            statusMessage =
+                "Your order is out for delivery.";
+
+            statusIcon = "🛵";
+
+        }
+
+        else if (
+            status === "Delivered"
+        ) {
+
+            statusMessage =
+                "Your order has been delivered successfully.";
+
+            statusIcon = "🎉";
+
+        }
+
+
+        const tracking =
+            order.trackingNumber || "";
+
+
+        result.innerHTML = `
+
+            <div style="
+                padding:20px;
+                border-radius:16px;
+                background:rgba(255,255,255,.05);
+                border:1px solid rgba(255,255,255,.12);
+            ">
+
+                <p style="
+                    color:#aaa;
+                    margin-bottom:5px;
+                ">
+                    Order ID
+                </p>
+
+                <h3 style="
+                    margin-top:0;
+                    color:#ffd76a;
+                ">
+                    ${order.orderId || orderId}
+                </h3>
+
+
+                <hr style="
+                    border:0;
+                    border-top:
+                    1px solid rgba(255,255,255,.12);
+                ">
+
+
+                <div style="
+                    text-align:center;
+                    padding:15px 0;
+                ">
+
+                    <div style="font-size:45px;">
+                        ${statusIcon}
+                    </div>
+
+                    <h2 style="
+                        color:#ffd76a;
+                        margin:8px 0;
+                    ">
+                        ${status}
+                    </h2>
+
+                    <p style="
+                        color:#9de7ff;
+                        line-height:1.6;
+                    ">
+                        ${statusMessage}
+                    </p>
+
+                </div>
+
+
+                <div style="
+                    background:rgba(255,255,255,.04);
+                    padding:15px;
+                    border-radius:12px;
+                ">
+
+                    <p>
+                        <strong>
+                            Amount:
+                        </strong>
+
+                        ₹${order.finalAmount || 0}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Weight:
+                        </strong>
+
+                        ${order.totalWeight || 0} g
+                    </p>
+
+
+                    ${
+                        tracking
+                        ?
+                        `
+                        <p>
+                            <strong>
+                                Tracking Number:
+                            </strong>
+
+                            ${tracking}
+                        </p>
+                        `
+                        :
+                        `
+                        <p style="color:#aaa;">
+                            Tracking number will appear
+                            after shipment.
+                        </p>
+                        `
+                    }
+
+                </div>
+
+            </div>
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Order tracking error:",
+            error
+        );
+
+
+        result.innerHTML = `
+            <p style="color:#ff7777;">
+                Could not load order.
+                Please try again.
+            </p>
+        `;
+    }
+
+};
+
+</script>
+
+</body>
+
+</html>

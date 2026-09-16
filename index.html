@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nashik Kumbh Jal | Sacred Water</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <meta name="description"
+        content="Nashik Kumbh Jal - A spiritual water experience inspired by Nashik and the Godavari.">
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+        💧 <span>Nashik</span> Kumbh Jal
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Jal</a>
+        <a href="#spiritual">Experience</a>
+        <a href="#about">About</a>
+        <a href="#order">Order</a>
+
+        <!-- MY ORDERS BUTTON -->
+        <a href="my-orders.html"
+           style="
+               display:inline-block;
+               padding:9px 15px;
+               margin-left:5px;
+               border:1px solid rgba(157,231,255,0.7);
+               border-radius:20px;
+               background:rgba(157,231,255,0.10);
+               color:#fff;
+               text-decoration:none;
+               transition:0.3s;
+           "
+           onmouseover="this.style.background='rgba(157,231,255,0.25)';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='rgba(157,231,255,0.10)';this.style.transform='translateY(0)'"
+        >
+            📋 My Orders
+        </a>
+
+        <!-- TRACK ORDER BUTTON -->
+        <a href="track.html"
+           style="
+               display:inline-block;
+               padding:9px 15px;
+               margin-left:5px;
+               border:1px solid rgba(56,189,248,0.7);
+               border-radius:20px;
+               background:rgba(56,189,248,0.12);
+               color:#fff;
+               text-decoration:none;
+               transition:0.3s;
+           "
+           onmouseover="this.style.background='rgba(56,189,248,0.25)';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='rgba(56,189,248,0.12)';this.style.transform='translateY(0)'"
+        >
+            📦 Track Order
+        </a>
+
+        <!-- ADMIN PANEL BUTTON -->
+        <a href="admin.html"
+           style="
+               display:inline-block;
+               padding:9px 15px;
+               margin-left:5px;
+               border:1px solid rgba(255,215,106,0.7);
+               border-radius:20px;
+               background:rgba(255,215,106,0.10);
+               color:#fff;
+               text-decoration:none;
+               transition:0.3s;
+           "
+           onmouseover="this.style.background='rgba(255,215,106,0.22)';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='rgba(255,215,106,0.10)';this.style.transform='translateY(0)'"
+        >
+            🛠️ Admin Panel
+        </a>
+
+    </nav>
+
+    <button class="cart-btn" onclick="openCart()">
+        🛒 Cart
+        <span id="cartCount">0</span>
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section id="home" class="hero">
+
+    <div class="water-bg"></div>
+
+    <div class="floating-circle circle1"></div>
+    <div class="floating-circle circle2"></div>
+    <div class="floating-circle circle3"></div>
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            Sacred Water • Nashik • Godavari
+        </p>
+
+        <h1>
+            Nashik
+            <br>
+            <span>Kumbh Jal</span>
+        </h1>
+
+        <p class="hero-text">
+
+            A drop inspired by the spiritual heritage of
+            Nashik, the sacred Godavari and the timeless
+            Kumbh tradition.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#products" class="primary-btn">
+                💧 Explore Kumbh Jal
+            </a>
+
+            <a href="#spiritual" class="secondary-btn">
+                🪔 Discover Nashik
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="water-drop-3d">
+
+        <div class="drop-shine"></div>
+
+        <div class="drop-inner">
+            💧
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SPIRITUAL EXPERIENCE
+===================================================== -->
+
+<section id="spiritual" class="about-section">
+
+    <div class="about-content">
+
+        <p class="section-label">
+            🪔 DIVINE NASHIK 🪔
+        </p>
+
+        <h2>
+            Where
+            <span>Faith Meets Water</span>
+        </h2>
+
+        <p>
+
+            Nashik is deeply connected with the Godavari,
+            ancient temples and the Kumbh tradition.
+
+            This experience is designed with that spiritual
+            atmosphere in mind — water, devotion, heritage
+            and the timeless feeling of Nashik.
+
+        </p>
+
+        <div class="features">
+
+            <div>
+                🕉️
+                <br>
+                <strong>Spiritual Heritage</strong>
+            </div>
+
+            <div>
+                🌊
+                <br>
+                <strong>Godavari Inspiration</strong>
+            </div>
+
+            <div>
+                🪷
+                <br>
+                <strong>Sacred Tradition</strong>
+            </div>
+
+            <div>
+                🛕
+                <br>
+                <strong>Nashik Heritage</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+
+<section id="products" class="products-section">
+
+    <div class="section-heading">
+
+        <p>🪷 OUR COLLECTION 🪷</p>
+
+        <h2>
+            Choose Your
+            <span>Kumbh Jal</span>
+        </h2>
+
+        <div class="heading-line"></div>
+
+        <p>
+            Choose the quantity that suits your needs.
+        </p>
+
+    </div>
+
+
+    <div class="product-grid">
+
+
+        <!-- 250 ML -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+                💧
+            </div>
+
+            <div class="product-info">
+
+                <span class="product-tag">
+                    MINI
+                </span>
+
+                <h3>
+                    Kumbh Jal
+                </h3>
+
+                <p class="volume">
+                    250 ML
+                </p>
+
+                <p class="description">
+                    Compact size for personal use
+                    and spiritual occasions.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        ₹49
+                    </strong>
+
+                    <button
+                        onclick="addToCart('250 ML Kumbh Jal',49)"
+                    >
+                        Add +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 500 ML -->
+
+        <div class="product-card featured">
+
+            <div class="popular">
+                POPULAR
+            </div>
+
+            <div class="product-image">
+                💧
+            </div>
+
+            <div class="product-info">
+
+                <span class="product-tag">
+                    STANDARD
+                </span>
+
+                <h3>
+                    Kumbh Jal
+                </h3>
+
+                <p class="volume">
+                    500 ML
+                </p>
+
+                <p class="description">
+                    A convenient everyday size
+                    inspired by Nashik's spiritual heritage.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        ₹79
+                    </strong>
+
+                    <button
+                        onclick="addToCart('500 ML Kumbh Jal',79)"
+                    >
+                        Add +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 1 LITRE -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+                💧
+            </div>
+
+            <div class="product-info">
+
+                <span class="product-tag">
+                    FAMILY
+                </span>
+
+                <h3>
+                    Kumbh Jal
+                </h3>
+
+                <p class="volume">
+                    1 Litre
+                </p>
+
+                <p class="description">
+                    Suitable for family use,
+                    पूजा and special occasions.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        ₹129
+                    </strong>
+
+                    <button
+                        onclick="addToCart('1 Litre Kumbh Jal',129)"
+                    >
+                        Add +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DIVINE STORY SECTION
+===================================================== -->
+
+<section class="about-section">
+
+    <div class="about-content">
+
+        <p class="section-label">
+            🛕 NASHIK • GODAVARI • KUMBH
+        </p>
+
+        <h2>
+            A Journey Through
+            <span>Divine Nashik</span>
+        </h2>
+
+        <p>
+
+            From the banks of the Godavari to the ancient
+            temples of Nashik, the city carries a rich
+            spiritual atmosphere.
+
+        </p>
+
+        <br>
+
+        <p>
+
+            Our website brings elements of that atmosphere
+            into a modern digital experience while keeping
+            the focus on the water product and your
+            ordering journey.
+
+        </p>
+
+        <div class="features">
+
+            <div>
+                🪔
+                <br>
+                <strong>Divine Light</strong>
+            </div>
+
+            <div>
+                🌊
+                <br>
+                <strong>Flow of Godavari</strong>
+            </div>
+
+            <div>
+                🧘
+                <br>
+                <strong>Peace & Devotion</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section id="about" class="about-section">
+
+    <div class="about-content">
+
+        <p class="section-label">
+            THE ESSENCE OF NASHIK
+        </p>
+
+        <h2>
+            More Than
+            <span>Just Water.</span>
+        </h2>
+
+        <p>
+
+            Nashik Kumbh Jal is designed as a spiritual
+            themed online experience inspired by Nashik's
+            cultural and religious heritage.
+
+        </p>
+
+        <br>
+
+        <p>
+
+            Select your preferred quantity, add it to the
+            cart and enter your delivery details to continue
+            with your order.
+
+        </p>
+
+        <div class="features">
+
+            <div>
+                💧
+                <br>
+                <strong>Carefully Presented</strong>
+            </div>
+
+            <div>
+                📦
+                <br>
+                <strong>Safe Packaging</strong>
+            </div>
+
+            <div>
+                🚚
+                <br>
+                <strong>Delivery Support</strong>
+            </div>
+
+            <div>
+                📍
+                <br>
+                <strong>Order Tracking</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ORDER SECTION
+===================================================== -->
+
+<section id="order" class="order-section">
+
+    <div class="section-heading">
+
+        <p>
+            🪔 ORDER ONLINE 🪔
+        </p>
+
+        <h2>
+            Get Your
+            <span>Kumbh Jal</span>
+        </h2>
+
+        <div class="heading-line"></div>
+
+        <p>
+            Enter your delivery details carefully.
+        </p>
+
+    </div>
+
+
+    <div class="order-box">
+
+        <h3>
+            📦 Delivery Details
+        </h3>
+
+        <label for="customerName">
+            Your Name
+        </label>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Enter your full name"
+            autocomplete="name"
+        >
+
+        <label for="mobile">
+            Mobile Number
+        </label>
+
+        <input
+            type="tel"
+            id="mobile"
+            placeholder="Enter 10 digit mobile number"
+            maxlength="10"
+            inputmode="numeric"
+            autocomplete="tel"
+        >
+
+        <label for="address">
+            Complete Delivery Address
+        </label>
+
+        <textarea
+            id="address"
+            placeholder="House No., Street, Village/City, District, Maharashtra"
+        ></textarea>
+
+        <label for="pincode">
+            PIN Code
+        </label>
+
+        <input
+            type="text"
+            id="pincode"
+            placeholder="Enter 6 digit PIN code"
+            maxlength="6"
+            inputmode="numeric"
+            autocomplete="postal-code"
+        >
+
+        <div style="
+            margin-top:22px;
+            padding:18px;
+            border-radius:18px;
+            background:rgba(255,193,70,0.06);
+            border:1px solid rgba(255,193,70,0.18);
+            text-align:center;
+        ">
+
+            <div style="font-size:28px;">
+                💳
+            </div>
+
+            <strong style="color:#ffe19a;">
+                Secure Payment
+            </strong>
+
+            <p style="
+                margin-top:8px;
+                color:#91a7bb;
+                font-size:13px;
+                line-height:1.6;
+            ">
+
+                After entering your details,
+                continue to the payment step.
+
+            </p>
+
+        </div>
+
+        <button
+            class="order-btn"
+            onclick="startOrder()"
+        >
+            Continue to Payment →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CART MODAL
+===================================================== -->
+
+<div
+    id="cartModal"
+    class="modal"
+>
+
+    <div class="cart-box">
+
+        <button
+            class="close-btn"
+            onclick="closeCart()"
+        >
+            ✕
+        </button>
+
+        <h2>
+            🛒 Your Kumbh Jal Cart
+        </h2>
+
+        <div id="cartItems">
+
+            Your cart is empty.
+
+        </div>
+
+        <div class="cart-total">
+
+            <span>
+                Total:
+            </span>
+
+            <span>
+                ₹<span id="cartTotal">0</span>
+            </span>
+
+        </div>
+
+        <button
+            class="checkout-btn"
+            onclick="goToOrder()"
+        >
+            Checkout →
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        💧 Nashik Kumbh Jal
+
+    </div>
+
+    <p>
+
+        🪔 Inspired by the spiritual and cultural
+        heritage of Nashik.
+
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#products">
+            Jal
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+        <a href="#order">
+            Order
+        </a>
+
+        <!-- MY ORDERS -->
+        <a href="my-orders.html"
+           style="
+               display:inline-block;
+               padding:8px 14px;
+               border:1px solid rgba(157,231,255,0.7);
+               border-radius:18px;
+               color:#fff;
+               text-decoration:none;
+           ">
+            📋 My Orders
+        </a>
+
+        <!-- TRACK ORDER -->
+        <a href="track.html"
+           style="
+               display:inline-block;
+               padding:8px 14px;
+               border:1px solid rgba(56,189,248,0.7);
+               border-radius:18px;
+               color:#fff;
+               text-decoration:none;
+           ">
+            📦 Track Order
+        </a>
+
+        <!-- ADMIN PANEL -->
+        <a href="admin.html"
+           style="
+               display:inline-block;
+               padding:8px 14px;
+               border:1px solid rgba(255,215,106,0.7);
+               border-radius:18px;
+               color:#fff;
+               text-decoration:none;
+           ">
+            🛠️ Admin Panel
+        </a>
+
+    </div>
+
+
+    <p class="copyright">
+
+        © 2026 Nashik Kumbh Jal.
+        All rights reserved.
+
+    </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
